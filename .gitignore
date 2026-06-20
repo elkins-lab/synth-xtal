@@ -16,3 +16,4 @@ build/
 # Test data
 4LZT*
 *.mtz
+_version.py
