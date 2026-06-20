@@ -58,10 +58,17 @@ def simulate_diffraction(input_pdb: str, output_mtz: str, d_min: float = 2.0, ma
     # Apply cell and spacegroup to density calculator
     dc.set_grid_cell_and_spacegroup(st)
 
-    # Calculate density for the first model
-    # (Assuming single model PDB for simplicity of simulation)
-    model = st[0]
-    dc.put_model_density_on_grid(model)
+    # Calculate density for all models in the ensemble
+    # This correctly superimposes densities, equivalent to alternative conformations
+    # To maintain scaling, we scale the entire grid by 1 / N_models if there are multiple models
+    for model in st:
+        dc.put_model_density_on_grid(model)
+
+    num_models = len(st)
+    if num_models > 1:
+        # Scale grid by 1 / num_models to get the average density
+        grid_array = np.array(dc.grid, copy=False)
+        grid_array *= 1.0 / num_models
 
     # Perform FFT to reciprocal space
     f_phi = gemmi.transform_map_to_f_phi(dc.grid)
@@ -76,8 +83,6 @@ def simulate_diffraction(input_pdb: str, output_mtz: str, d_min: float = 2.0, ma
     values = np.array(asu_data.value_array, copy=False)
 
     sg = st.find_spacegroup()
-    if sg is None:
-        sg = gemmi.SpaceGroup("P 1")
 
     print(f"Spacegroup: {sg.hm}, Cell: {st.cell.a}, {st.cell.b}, {st.cell.c}")
     print(f"Generated {len(hkl)} reflections")
