@@ -99,6 +99,39 @@ def test_simulate_diffraction_multi_model():
         assert os.path.exists(mtz_path)
         mtz = gemmi.read_mtz_file(mtz_path)
         assert len(mtz.columns) > 3
+
+
+def test_simulate_diffraction_multi_model_bulk_solvent():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        pdb_path = os.path.join(tmpdir, "multi_bulk.pdb")
+        mtz_path = os.path.join(tmpdir, "multi_bulk.mtz")
+
+        # Create a dummy structure with 2 models
+        st = gemmi.Structure()
+        st.cell = gemmi.UnitCell(10.0, 10.0, 10.0, 90.0, 90.0, 90.0)
+        st.spacegroup_hm = "P 1"
+        for i in range(2):
+            model = gemmi.Model(str(i + 1))
+            chain = gemmi.Chain("A")
+            res = gemmi.Residue()
+            res.name = "ALA"
+            atom = gemmi.Atom()
+            atom.name = "CA"
+            atom.element = gemmi.Element("C")
+            atom.pos = gemmi.Position(5.0 + i, 5.0, 5.0)
+            atom.occ = 1.0
+            atom.b_iso = 20.0
+            res.add_atom(atom)
+            chain.add_residue(res)
+            model.add_chain(chain)
+            st.add_model(model)
+        st.write_pdb(pdb_path)
+
+        simulate_diffraction(pdb_path, mtz_path, d_min=3.0, use_bulk_solvent=True)
+
+        assert os.path.exists(mtz_path)
+        mtz = gemmi.read_mtz_file(mtz_path)
+        assert len(mtz.columns) > 3
         assert mtz.spacegroup.hm == "P 1"
         assert len(mtz.columns) > 3  # H, K, L and some data columns like FC, PHIC
 

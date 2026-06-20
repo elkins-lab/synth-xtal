@@ -62,3 +62,17 @@ def test_cli_failure(capsys):
 
     captured = capsys.readouterr()
     assert "Error:" in captured.err
+
+
+def test_cli_exception(capsys):
+    test_args = ["synth-xtal", "bad.pdb", "-o", "out.mtz"]
+
+    # Mock simulate_diffraction to raise a generic Exception
+    with patch("synth_xtal.cli.simulate_diffraction", side_effect=Exception("Mocked failure")):
+        with patch("sys.argv", test_args):
+            with pytest.raises(SystemExit) as e:
+                main()
+            assert e.value.code == 1
+
+    captured = capsys.readouterr()
+    assert "Error: Mocked failure" in captured.err
