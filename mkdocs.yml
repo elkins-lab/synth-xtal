@@ -1,0 +1,30 @@
+site_name: synth-xtal
+site_url: https://elkins-lab.github.io/synth-xtal
+repo_url: https://github.com/elkins/synth-xtal
+repo_name: elkins/synth-xtal
+site_description: Lightweight Crystallography profile simulation from protein coordinates
+site_author: George Elkins
+
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: deep purple
+    accent: indigo
+
+nav:
+  - Home: index.md
+  - API Reference: api.md
+  - Science: science.md
+  - Scientific Validation: validation.md
+  - Security Policy: SECURITY.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            docstring_style: google
+            show_source: true

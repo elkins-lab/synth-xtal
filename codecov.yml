@@ -1,0 +1,18 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%
+    patch:
+      default:
+        target: auto
+        threshold: 1%
+  ignore:
+    - "tests/**/*"
+    - "setup.py"
+    - "docs/**/*"
+    - "examples/**/*"
+
+fixes:
+  - "synth_xtal/::synth_xtal/"

@@ -1,0 +1,44 @@
+Metadata-Version: 2.4
+Name: synth-xtal
+Version: 0.1.0
+Summary: Simulate X-ray crystallography diffraction data from atomic models.
+Author: George Elkins
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: gemmi
+Requires-Dist: numpy
+Requires-Dist: reciprocalspaceship
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
+Provides-Extra: test
+Requires-Dist: pytest; extra == "test"
+Requires-Dist: pytest-cov; extra == "test"
+Provides-Extra: docs
+Requires-Dist: mkdocs>=1.6.0; extra == "docs"
+Requires-Dist: mkdocs-material>=9.5.0; extra == "docs"
+Requires-Dist: mkdocstrings[python]>=0.25.0; extra == "docs"
+
+# synth-xtal
+
+Simulates X-ray crystallography diffraction data (structure factors and MTZ files) from input atomic models (PDB/mmCIF files).
+
+## Installation
+
+```bash
+pip install synth-xtal
+```
+
+## Usage
+
+You can use the command-line interface to simulate an MTZ file from a PDB:
+
+```bash
+synth-xtal input.pdb -o simulated.mtz --resolution 2.0
+```
+
+If the input PDB lacks a unit cell (CRYST1 record), `synth-xtal` will automatically place the molecule in a P1 unit cell with a 10 Å margin around the bounding box.

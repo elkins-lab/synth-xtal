@@ -1,0 +1,85 @@
+import os
+import tempfile
+import gemmi
+
+from synth_xtal.simulator import simulate_diffraction
+
+
+def create_dummy_pdb(path):
+    st = gemmi.Structure()
+    st.cell = gemmi.UnitCell(20, 20, 20, 90, 90, 90)
+    st.spacegroup_hm = "P 1"
+
+    model = gemmi.Model("1")
+    chain = gemmi.Chain("A")
+    res = gemmi.Residue()
+    res.name = "ALA"
+    res.seqid = gemmi.SeqId("1")
+
+    atom = gemmi.Atom()
+    atom.name = "CA"
+    atom.element = gemmi.Element("C")
+    atom.pos = gemmi.Position(10.0, 10.0, 10.0)
+    atom.b_iso = 20.0
+    res.add_atom(atom)
+    chain.add_residue(res)
+    model.add_chain(chain)
+    st.add_model(model)
+    st.write_pdb(path)
+
+
+def create_cell_less_pdb(path):
+    st = gemmi.Structure()
+
+    model = gemmi.Model("1")
+    chain = gemmi.Chain("A")
+    res = gemmi.Residue()
+    res.name = "ALA"
+    res.seqid = gemmi.SeqId("1")
+
+    atom = gemmi.Atom()
+    atom.name = "CA"
+    atom.element = gemmi.Element("C")
+    atom.pos = gemmi.Position(5.0, 5.0, 5.0)
+    atom.b_iso = 20.0
+    res.add_atom(atom)
+    chain.add_residue(res)
+    model.add_chain(chain)
+    st.add_model(model)
+    st.write_pdb(path)
+
+
+def test_simulate_diffraction_with_cell():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        pdb_path = os.path.join(tmpdir, "test.pdb")
+        mtz_path = os.path.join(tmpdir, "test.mtz")
+
+        create_dummy_pdb(pdb_path)
+
+        simulate_diffraction(pdb_path, mtz_path, d_min=3.0)
+
+        assert os.path.exists(mtz_path)
+
+        # Verify MTZ contents
+        mtz = gemmi.read_mtz_file(mtz_path)
+        assert mtz.resolution_high() <= 3.1
+        assert mtz.spacegroup.hm == "P 1"
+        assert len(mtz.columns) > 3  # H, K, L and some data columns like FC, PHIC
+
+
+def test_simulate_diffraction_without_cell():
+    with tempfile.TemporaryDirectory() as tmpdir:
+        pdb_path = os.path.join(tmpdir, "nocell.pdb")
+        mtz_path = os.path.join(tmpdir, "nocell.mtz")
+
+        create_cell_less_pdb(pdb_path)
+
+        simulate_diffraction(pdb_path, mtz_path, d_min=3.0, margin=5.0)
+
+        assert os.path.exists(mtz_path)
+        mtz = gemmi.read_mtz_file(mtz_path)
+
+        # A single atom bounding box is point-like, margin=5 -> dims = 10x10x10
+        assert abs(mtz.cell.a - 10.0) < 1e-4
+        assert abs(mtz.cell.b - 10.0) < 1e-4
+        assert abs(mtz.cell.c - 10.0) < 1e-4

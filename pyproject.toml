@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synth-xtal"
+version = "0.1.0"
+description = "Simulate X-ray crystallography diffraction data from atomic models."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "George Elkins"},
+]
+dependencies = [
+    "gemmi",
+    "numpy",
+    "reciprocalspaceship",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+    "pre-commit",
+]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+docs = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.25.0",
+]
+[project.scripts]
+synth-xtal = "synth_xtal.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["synth_xtal*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.ruff]
+line-length = 100

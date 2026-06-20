@@ -1,0 +1,2 @@
+[console_scripts]
+synth-xtal = synth_xtal.cli:main
