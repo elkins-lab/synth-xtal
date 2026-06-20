@@ -81,6 +81,7 @@ Try out `synth-xtal` interactively in Google Colab:
 
 - **01. Crystallography Basics:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins-lab/synth-xtal/blob/main/examples/interactive_tutorials/01_crystallography_basics.ipynb)
 - **02. Experimental Validation (4LZT):** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins-lab/synth-xtal/blob/main/examples/interactive_tutorials/02_experimental_validation.ipynb)
+- **03. Virtual Crystallography Lab:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins-lab/synth-xtal/blob/main/examples/interactive_tutorials/03_virtual_crystallography_lab.ipynb)
 
 ## Acknowledgements
 `synth-xtal` was heavily inspired by the educational goals of the larger [synth-pdb](https://github.com/elkins/synth-pdb) ecosystem and relies critically on:

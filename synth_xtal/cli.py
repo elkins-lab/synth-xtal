@@ -22,12 +22,35 @@ def main():
         default=10.0,
         help="Margin in Ångströms for the unit cell bounding box if PDB lacks cell (default: 10.0).",
     )
+    parser.add_argument(
+        "--bulk-solvent",
+        action="store_true",
+        help="Enable flat bulk solvent modeling.",
+    )
+    parser.add_argument(
+        "--k-sol",
+        type=float,
+        default=0.35,
+        help="Bulk solvent scale factor (default: 0.35).",
+    )
+    parser.add_argument(
+        "--b-sol",
+        type=float,
+        default=45.0,
+        help="Bulk solvent B-factor (default: 45.0).",
+    )
 
     args = parser.parse_args()
 
     try:
         simulate_diffraction(
-            input_pdb=args.input, output_mtz=args.output, d_min=args.resolution, margin=args.margin
+            input_pdb=args.input,
+            output_mtz=args.output,
+            d_min=args.resolution,
+            margin=args.margin,
+            use_bulk_solvent=args.bulk_solvent,
+            k_sol=args.k_sol,
+            b_sol=args.b_sol,
         )
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

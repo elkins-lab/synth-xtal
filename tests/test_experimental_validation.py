@@ -37,7 +37,7 @@ def test_experimental_validation():
         st.write_pdb(pdb_path)
 
         # 2. Simulate structure factors at 1.5A resolution
-        simulate_diffraction(pdb_path, mtz_path, d_min=1.5)
+        simulate_diffraction(pdb_path, mtz_path, d_min=1.5, use_bulk_solvent=True)
 
         # 3. Read the calculated and experimental data
         calc_ds = rs.read_mtz(mtz_path)

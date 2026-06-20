@@ -43,3 +43,15 @@ None of the existing tutorials currently leverage `synth-pdb`; they all fetch st
 ## 9. Disulfide Topology Definition (`synth-pdb`)
 *   **Topology Builder**: In our sister project `synth-pdb`, implement a feature to explicitly declare disulfide cross-link constraints before running the `EnergyMinimizer`.
 *   **Impact**: This would unlock the ability to properly simulate, relax, and benchmark classic, hard-to-simulate NMR standards like Bovine Pancreatic Trypsin Inhibitor (BPTI) and Epidermal Growth Factor (EGF) without the physics engine encountering NaNs.
+
+## 10. Anomalous Scattering Simulation
+- Add support for simulating anomalous scattering ($\Delta f'$ and $\Delta f''$) for heavy atoms (e.g., Se, S).
+- Allows `synth-xtal` to generate anomalous difference datasets (SAD/MAD) for educational phasing tutorials.
+
+## 11. Advanced B-Factor & Thermal Noise Handling
+- Properly parse and utilize anisotropic `ANISOU` records, adding positive-definite safeguards.
+- Inject Wilson B-factor decay or experimental noise into the calculated intensities to simulate poor-quality experimental crystals.
+
+## 12. Crystal Packing & Symmetry Generation
+- Introduce a `--spacegroup` argument to explicitly apply crystallographic symmetry operations.
+- Automatically pack asymmetric monomers into full crystallographic unit cells (e.g., $P 2_1 2_1 2_1$) prior to diffraction simulation using `gemmi`'s symmetry handling.
