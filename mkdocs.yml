@@ -17,6 +17,9 @@ nav:
   - API Reference: api.md
   - Science: science.md
   - Scientific Validation: validation.md
+  - Tutorials:
+      - Crystallography Basics: tutorials/01_crystallography_basics.ipynb
+      - Experimental Validation: tutorials/02_experimental_validation.ipynb
   - Security Policy: SECURITY.md
 
 plugins:

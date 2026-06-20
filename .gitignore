@@ -12,3 +12,7 @@ build/
 *.egg-info/
 *.mtz
 *.pdb
+
+# Test data
+4LZT*
+*.mtz
