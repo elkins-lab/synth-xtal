@@ -32,8 +32,9 @@ python -m twine upload dist/*
 The repository is configured to automatically publish to PyPI when a **GitHub Release** is created.
 
 1.  Add your PyPI API token to GitHub Secrets as `PYPI_API_TOKEN`.
-2.  Update the version in `pyproject.toml`.
-3.  Create and publish a new Release on GitHub.
+2.  Commit all changes and create a new Git tag (e.g., `git tag v0.2.0`). The project uses `setuptools_scm` to dynamically set the version from the Git tag.
+3.  Push the commit and tag to GitHub (`git push && git push --tags`).
+4.  Create and publish a new Release on GitHub based on the new tag.
 
 ## Bioconda Publishing
 

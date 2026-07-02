@@ -10,7 +10,7 @@ def create_dummy_pdb(filepath: str):
     st = gemmi.Structure()
     st.cell = gemmi.UnitCell(10.0, 10.0, 10.0, 90.0, 90.0, 90.0)
     st.spacegroup_hm = "P 1"
-    model = gemmi.Model("1")
+    model = gemmi.Model("1")  # type: ignore[arg-type]
     chain = gemmi.Chain("A")
     res = gemmi.Residue()
     res.name = "ALA"

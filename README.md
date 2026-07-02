@@ -11,7 +11,7 @@
 
 **synth-xtal** is a lightweight Python library for simulating X-ray Crystallography diffraction data (structure factors and MTZ files) from input atomic models (PDB/mmCIF files).
 
-Extracted from the [synth-pdb](https://github.com/elkins/synth-pdb) ecosystem, it provides a physically grounded, education-focused engine for reciprocal space simulation.
+Extracted from the [synth-pdb](https://github.com/elkins-lab/synth-pdb) ecosystem, it provides a physically grounded, education-focused engine for reciprocal space simulation.
 
 ---
 
@@ -84,6 +84,6 @@ Try out `synth-xtal` interactively in Google Colab:
 - **03. Virtual Crystallography Lab:** [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/elkins-lab/synth-xtal/blob/main/examples/interactive_tutorials/03_virtual_crystallography_lab.ipynb)
 
 ## Acknowledgements
-`synth-xtal` was heavily inspired by the educational goals of the larger [synth-pdb](https://github.com/elkins/synth-pdb) ecosystem and relies critically on:
+`synth-xtal` was heavily inspired by the educational goals of the larger [synth-pdb](https://github.com/elkins-lab/synth-pdb) ecosystem and relies critically on:
 - [gemmi](https://gemmi.readthedocs.io/) - for core density calculations and FFT operations.
 - [reciprocalspaceship](https://rs-station.github.io/reciprocalspaceship/) - for MTZ manipulation and Pandas integration.

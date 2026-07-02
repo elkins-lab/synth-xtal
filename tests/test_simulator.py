@@ -10,7 +10,7 @@ def create_dummy_pdb(path):
     st.cell = gemmi.UnitCell(20, 20, 20, 90, 90, 90)
     st.spacegroup_hm = "P 1"
 
-    model = gemmi.Model("1")
+    model = gemmi.Model("1")  # type: ignore[arg-type]
     chain = gemmi.Chain("A")
     res = gemmi.Residue()
     res.name = "ALA"
@@ -31,7 +31,7 @@ def create_dummy_pdb(path):
 def create_cell_less_pdb(path):
     st = gemmi.Structure()
 
-    model = gemmi.Model("1")
+    model = gemmi.Model("1")  # type: ignore[arg-type]
     chain = gemmi.Chain("A")
     res = gemmi.Residue()
     res.name = "ALA"
@@ -77,7 +77,7 @@ def test_simulate_diffraction_multi_model():
         st.cell = gemmi.UnitCell(10.0, 10.0, 10.0, 90.0, 90.0, 90.0)
         st.spacegroup_hm = "P 1"
         for i in range(2):
-            model = gemmi.Model(str(i + 1))
+            model = gemmi.Model(str(i + 1))  # type: ignore[arg-type]
             chain = gemmi.Chain("A")
             res = gemmi.Residue()
             res.name = "ALA"
@@ -111,7 +111,7 @@ def test_simulate_diffraction_multi_model_bulk_solvent():
         st.cell = gemmi.UnitCell(10.0, 10.0, 10.0, 90.0, 90.0, 90.0)
         st.spacegroup_hm = "P 1"
         for i in range(2):
-            model = gemmi.Model(str(i + 1))
+            model = gemmi.Model(str(i + 1))  # type: ignore[arg-type]
             chain = gemmi.Chain("A")
             res = gemmi.Residue()
             res.name = "ALA"

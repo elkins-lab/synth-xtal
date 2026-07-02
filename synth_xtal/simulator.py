@@ -27,7 +27,7 @@ def simulate_diffraction(
     use_bulk_solvent: bool = False,
     k_sol: float = 0.35,
     b_sol: float = 45.0,
-):
+) -> None:
     """
     Simulate an MTZ file containing structure factors from a PDB model.
     If the PDB lacks a CRYST1 record (unit cell), a P 1 unit cell is
@@ -97,12 +97,16 @@ def simulate_diffraction(
         mask_grid.set_unit_cell(dc.grid.unit_cell)
         mask_grid.spacegroup = dc.grid.spacegroup
 
+        mask_array_total = np.zeros_like(np.array(mask_grid, copy=False))
+
         for model in st:
             masker.put_mask_on_float_grid(mask_grid, model)
+            mask_array_total += np.array(mask_grid, copy=False)
 
         if num_models > 1:
-            mask_array = np.array(mask_grid, copy=False)
-            mask_array *= 1.0 / num_models
+            mask_array_total *= 1.0 / num_models
+
+        np.copyto(np.array(mask_grid, copy=False), mask_array_total)
 
         f_phi_m = gemmi.transform_map_to_f_phi(mask_grid)
         asu_data_m = f_phi_m.prepare_asu_data(d_min)

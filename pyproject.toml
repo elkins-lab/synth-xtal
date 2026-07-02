@@ -12,6 +12,11 @@ license = {text = "MIT"}
 authors = [
     {name = "George Elkins"},
 ]
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
 dependencies = [
     "gemmi",
     "numpy",
