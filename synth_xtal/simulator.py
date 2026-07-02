@@ -27,6 +27,7 @@ def simulate_diffraction(
     use_bulk_solvent: bool = False,
     k_sol: float = 0.35,
     b_sol: float = 45.0,
+    ignore_anisou: bool = True,
 ) -> None:
     """
     Simulate an MTZ file containing structure factors from a PDB model.
@@ -34,6 +35,18 @@ def simulate_diffraction(
     automatically generated with the specified margin.
     """
     st = gemmi.read_structure(input_pdb)
+
+    if ignore_anisou:
+        for model in st:
+            for chain in model:
+                for residue in chain:
+                    for atom in residue:
+                        atom.aniso.u11 = 0
+                        atom.aniso.u22 = 0
+                        atom.aniso.u33 = 0
+                        atom.aniso.u12 = 0
+                        atom.aniso.u13 = 0
+                        atom.aniso.u23 = 0
 
     # Check if we need to add a unit cell (gemmi defaults to 1x1x1 if missing)
     if st.cell.a == 1.0 and st.cell.b == 1.0 and st.cell.c == 1.0:
